@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:untitled/comp/cin.dart';
 import 'package:untitled/comp/matt-butt.dart';
 import 'package:untitled/comp/textfrmf.dart';
-import 'package:untitled/auth/signup.dart';
+import 'package:untitled/auth/login.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Signup extends StatefulWidget {
+  const Signup({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Signup> createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends State<Signup> {
   final TextEditingController email = TextEditingController();
   final TextEditingController pass = TextEditingController();
+  final TextEditingController username = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +29,7 @@ class _LoginState extends State<Login> {
                 Cin(),
                 Container(height: 20),
                 Text(
-                  "login",
+                  "signup",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
                 Container(height: 10),
@@ -40,7 +41,13 @@ class _LoginState extends State<Login> {
               ],
             ),
             Container(height: 20),
-
+            Text(
+              "username",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            Container(height: 10),
+            Textfrmf(hinttext: "enter your username", mycon: username),
+            Container(height: 20),
             Text(
               "Email",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -65,19 +72,18 @@ class _LoginState extends State<Login> {
             Matt(name: "login", onPressed: () {}),
             Container(height: 20),
 
-            Matt(name: "login with google", onPressed: () {}),
             Container(height: 20),
             InkWell(
               onTap: () {
-                Navigator.of(context).pushNamed("signup");
+                Navigator.of(context).pushNamed("login");
               },
               child: Center(
                 child: Text.rich(
                   TextSpan(
                     children: [
-                      TextSpan(text: "dont have a account"),
+                      TextSpan(text: "if you have a account"),
                       TextSpan(
-                        text: "regestar",
+                        text: "login",
                         style: TextStyle(
                           color: Colors.amber,
                           fontWeight: FontWeight.bold,
