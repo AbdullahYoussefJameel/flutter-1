@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:untitled/comp/cin.dart';
 import 'package:untitled/comp/matt-butt.dart';
 import 'package:untitled/comp/textfrmf.dart';
-import 'package:untitled/auth/signup.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

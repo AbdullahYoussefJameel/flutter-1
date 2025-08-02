@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/comp/cin.dart';
 import 'package:untitled/comp/matt-butt.dart';
 import 'package:untitled/comp/textfrmf.dart';
 import 'package:untitled/auth/login.dart';
+import 'package:untitled/homepage.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -15,6 +17,7 @@ class _LoginState extends State<Signup> {
   final TextEditingController email = TextEditingController();
   final TextEditingController pass = TextEditingController();
   final TextEditingController username = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +43,7 @@ class _LoginState extends State<Signup> {
                 Container(height: 20),
               ],
             ),
+
             Container(height: 20),
             Text(
               "username",
@@ -69,13 +73,35 @@ class _LoginState extends State<Signup> {
                 style: TextStyle(fontSize: 14),
               ),
             ),
-            Matt(name: "login", onPressed: () {}),
+            customButtonAuth(
+              text: "signup",
+              onPressed: () async {
+                try {
+                  final credential = await FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                        email: email.text,
+                        password: pass.text,
+                      );
+                  Navigator.of(context).pushReplacementNamed("homepage");
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'email-already-in-use') {
+                    print('The account already exists for that email.');
+                  } else if (e.code == 'weak-password') {
+                    print('The password provided is too weak.');
+                  } else {
+                    print('Failed with error code: ${e.code}');
+                    print(e.message);
+                  }
+                }
+              },
+            ),
+
             Container(height: 20),
 
             Container(height: 20),
             InkWell(
               onTap: () {
-                Navigator.of(context).pushNamed("login");
+                Navigator.of(context).pushReplacementNamed("login");
               },
               child: Center(
                 child: Text.rich(
@@ -99,4 +125,19 @@ class _LoginState extends State<Signup> {
       ),
     );
   }
+}
+
+Widget customButtonAuth({
+  required String text,
+  required VoidCallback onPressed,
+}) {
+  return ElevatedButton(
+    onPressed: onPressed,
+    style: ElevatedButton.styleFrom(
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      backgroundColor: Colors.blueAccent,
+    ),
+    child: Text(text, style: TextStyle(fontSize: 18, color: Colors.white)),
+  );
 }
